@@ -1,0 +1,51 @@
+include variable/config.pug
+doctype html
+html(lang="sp")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Mi primer pagina con pug
+        link(rel="stylesheet", href="style.css")
+    body 
+        p Ciclo en pug array enumerado
+        ul 
+            each data in lista 
+                li=data
+        br
+        p Ciclo en pug Objeto
+        dl 
+            each value,id in objeto 
+                dt=id 
+                dd=value
+        br
+        p Ciclo con case, parecido al switch de JavaScript
+        case nombre 
+            when "Jaime": p=nombre 
+            when "Migule": h1=nombre 
+            default: strong El usuario no existe.
+        br
+        //-Mostrar texto
+        
+        strong Hola soy #{nombre}
+        //-Mostrar texto con HTML
+        p !{apellido}
+        //-Mostrar texto con HTML en pug
+        p Hola #[strong(id="myNombre")=nombre] como estas?
+        //-Condicionales
+        #usuario 
+            if usuario.tipo == "Jefe"
+                p(class="permiso") el #[strong=usuario.tipo] es #[em=usuario.nombre]
+            else 
+                strong Usuario no permitido
+        //-Mixin o funciones de diseño
+        mixin caja({...arg})
+            div(class="caja" style="background:"+arg.color+";")=arg.nombre
+
+        div 
+            +caja(ruta[0])
+            +caja(ruta[1])
+        //-Tomar variables de pug y usarlas en JavaScript
+        p F12 para mirar consola
+        script.
+            console.log(!{JSON.stringify(objeto)});
